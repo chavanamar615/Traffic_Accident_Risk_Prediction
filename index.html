@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Accident Risk Prediction</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Traffic Accident Risk Prediction</h1>
+        <form id="predictionForm" method="POST">
+            <label>Latitude:</label><input type="text" name="latitude"><br>
+            <label>Longitude:</label><input type="text" name="longitude"><br>
+            <label>Weather Condition:</label><input type="text" name="weather_condition"><br>
+            <button type="submit">Predict</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <script>
+        const form = document.getElementById('predictionForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('/', { method: 'POST', body: formData });
+            const result = await response.json();
+            document.getElementById('result').innerText = 'Predicted Severity: ' + result.severity;
+        });
+    </script>
+</body>
+</html>
